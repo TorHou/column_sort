@@ -1,0 +1,38 @@
+<tool id="columnArrange" name="columnArrange" version="0.1">
+  <description>sort columns by header</description>
+  <requirements>
+    <requirement type="python-module">pandas</requirement>
+  </requirements>
+  <command interpreter="python">
+    column_sort.py
+    #if $rep_param_columns:
+      --columns 
+      #for token in $param_column:
+        $token  
+      #end for
+    #end if
+    --in $input
+    --out $output
+  </command>
+  <inputs>
+    <param format="tabular" name="input" type="data" label="file to rearrange" />
+    <repeat name ="rep_param_columns" min="0" title="Specify the first few columns by name">
+      <param name="param_column" type="text" size="40" value="" label="column">
+        <sanitizer>
+          <valid initial="string.printable">
+            <remove value="&apos;"/>
+          </valid>
+        </sanitizer>
+      </param>
+    </repeat>
+  </inputs>
+  <outputs>
+    <data format="tabular" name="output" />
+  </outputs>
+  <help>
+**What it does**
+
+With this tool you can specify (by naming the header) which columns need to be in the front.
+
+  </help>
+</tool>
